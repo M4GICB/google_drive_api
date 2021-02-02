@@ -1,0 +1,24 @@
+{% extends "app/base.html" %}
+{% block content %}
+  <h1>Home Page</h1>
+
+  <button type="button" name="button" onclick="alert('hello!')">click me!</button> <br>
+  <button type="button" name="button2" onclick="hello()">click me 2!</button> <br>
+  <button type="button" name="button3" onclick="__main__()">click me 3!</button> <br>
+
+  <br><br>
+
+  <form method="POST">
+      {% csrf_token %}
+      <button type="submit" name="run_script">Run script</button>
+  </form>
+
+<h1>{{ test_param }}</h1>
+
+  <script type="text/javascript">
+    function hello() {
+      alert("whats up...?")
+    }
+
+  </script>
+{% endblock content %}
