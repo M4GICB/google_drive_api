@@ -53,21 +53,22 @@ if not creds or not creds.valid:
 	with open('token.pickle', 'wb') as token:
 		pickle.dump(creds, token)
 
-# Connect to the API service
-service = build('drive', 'v3', credentials=creds)
-
-# request a list of first N files or
-# folders with name and id from the API.
-results = service.files().list(
-	pageSize=100, fields="files(id, name)").execute()
-items = results.get('files', [])
-
-# print a list of files
-
-print("Here's a list of files: \n")
-print(*items, sep="\n", end="\n\n")
+# # Connect to the API service
+# service = build('drive', 'v3', credentials=creds)
+#
+# # request a list of first N files or
+# # folders with name and id from the API.
+# results = service.files().list(
+# 	pageSize=100, fields="files(id, name)").execute()
+# items = results.get('files', [])
+#
+# # print a list of files
+#
+# print("Here's a list of files: \n")
+# print(*items, sep="\n", end="\n\n")
 
 def FileDownload(file_id, file_name):
+	get_files()
 	request = service.files().get_media(fileId=file_id)
 	fh = io.BytesIO()
 
@@ -96,7 +97,7 @@ def FileDownload(file_id, file_name):
 		return False
 
 def FileUpload(filepath):
-
+	get_files()
 	# Extract the file name out of the file path
 	name = filepath.split('/')[-1]
 
@@ -121,7 +122,7 @@ def FileUpload(filepath):
 		raise UploadError("Can't Upload File.")
 
 def main_function():
-	# obj = DriveAPI()
+	get_files()
 	i = int(input("Enter your choice: 1 - Download file, 2- Upload File, 3- Exit.\n"))
 
 	if i == 1:
@@ -142,3 +143,20 @@ def hello_title_change(pram1, pram2):
 	print("\tpram1: ", pram1)
 	print("\tpram2: ", pram2)
 	return "hello"
+
+
+def get_files():
+	# Connect to the API service
+	service = build('drive', 'v3', credentials=creds)
+
+	# request a list of first N files or
+	# folders with name and id from the API.
+	results = service.files().list(
+		pageSize=100, fields="files(id, name)").execute()
+	items = results.get('files', [])
+
+	# print a list of files
+	print("Here's a list of files: \n")
+	print(*items, sep="\n", end="\n\n")
+	print("\nRESULTS DEBUG PRINT OUT>\n", results)
+	return items

@@ -21,9 +21,20 @@ def home(request):
         print(test_title)
         main()
 
-    return render(request, 'app/home.html', {'title': test_title, 'test_param': 'debug test param...'})
+    return render(request, 'app/home.html', {'title': test_title})
 
 
+def upload(request):
+    return render(request, 'app/upload_file.html', {'title': "Upload"})
 
-    # return user to required page
-    # return HttpResponseRedirect(reverse(app:app/home)
+
+def download(request):
+    files_result = "null"
+    result = {"name":"John", "age":30, "city":"New York"}
+    if request.method == 'POST' and 'download_execute' in request.POST:
+        from .updown import get_files
+        import json
+        files_result = get_files()
+        result = json.dumps(files_result)
+
+    return render(request, 'app/download_file.html', {'title': "Download", 'files_result': result})

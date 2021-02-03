@@ -1,0 +1,26 @@
+{% extends "app/base.html" %}
+{% block content %}
+  <h1>Download File Page</h1>
+
+  <form method="POST">
+      {% csrf_token %}
+      <button type="submit" name="download_execute">Download File</button>
+  </form>
+
+  <div class="" id="result">
+    {{ files_result }}
+  </div>
+
+
+  <p id="demo"></p>
+
+<script>
+  var txt = '{"name":"John", "age":30, "city":"New York"}'
+  var obj = JSON.parse(txt);
+  document.getElementById("demo").innerHTML = obj.name + ", " + obj.age;
+
+  var res = JSON.parse({{ files_result }});
+  document.getElementById("result").innerHTML = res.id + ", " + res.name;
+</script>
+
+{% endblock content %}

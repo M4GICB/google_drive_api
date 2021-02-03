@@ -1,0 +1,10 @@
+{% extends "app/base.html" %}
+{% block content %}
+  <h1>Upload File Page</h1>
+
+  <form method="POST">
+      {% csrf_token %}
+      <button type="submit" name="upload_file">Upload File</button>
+  </form>
+
+{% endblock content %}
