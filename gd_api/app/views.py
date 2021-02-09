@@ -9,17 +9,15 @@ def home(request):
     test_title = "Home"
     if request.method == 'POST' and 'run_script' in request.POST:
 
-        # import function to run
-        from .updown import FileDownload
-        from .updown import FileUpload
-        from .updown import main
+        # import function(s) to run
+        from .updown import main_function
         from .updown import hello_title_change
         # from .updown import DriveAPI
 
         # call function
-        test_title = main_function(1, 2)
-        print(test_title)
-        main()
+        test_title = hello_title_change(1, 2)
+        print("DEBUG > TEST_TITLE FROM hello_title_change():\n\t", test_title)
+        main_function()
 
     return render(request, 'app/home.html', {'title': test_title})
 
